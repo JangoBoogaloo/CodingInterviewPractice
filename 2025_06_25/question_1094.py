@@ -15,8 +15,8 @@ Constraints:
 * 1 <= trips.length <= 1000
 * trips[i].length == 3
 * 1 <= numPassengers_i <= 100
-* 0 <= from_i < toi <= 1000
-* 1 <= capacity <= 105
+* 0 <= from_i < to_i <= 1000
+* 1 <= capacity <= 10^5
 """
 from typing import List
 
