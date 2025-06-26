@@ -21,7 +21,25 @@ Example 1 (see image)
 * Output: -1
 """
 from typing import List
+from collections import Counter
+
 
 class Solution:
     def brightestPosition(self, lights: List[List[int]]) -> int:
-        return -1
+
+        c = Counter()
+                                   #      [-3,2]      [1,2]      [3,3]
+        for pos, ran in lights:    # pos  -5  0       -1  4       0 7
+            c[pos - range] += 1     #      1  -1       1  -1      1 -1
+            c[pos + range + 1] -=1  #      -5=1   -1=1   ... 
+
+        res = 0
+        curr = 0
+        max = 0
+        for pos, change in sorted(c):
+            curr += change # duration
+            if max < curr:
+                max = curr
+                res = pos
+
+        return res

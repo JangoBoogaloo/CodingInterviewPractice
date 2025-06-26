@@ -23,4 +23,21 @@ from typing import List
 
 class Solution:
     def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
-        return False
+
+        stop_change = [0] * 1001
+
+        # [100, 0, 1001] 100
+
+
+        for numPass, from_, to_ in trips:
+            stop_change[from_] += numPass # 100
+            stop_change[to_] -= numPass   #       -100
+
+        currPass = 0
+        for change in stop_change:
+            currPass+=change
+
+            if currPass > capacity:
+                return False
+
+        return True

@@ -11,10 +11,29 @@ Return the earliest year with the maximum population.
 Constraints:
 * 1 <= logs.length <= 100
 * 1950 <= birth_i < death_i <= 2050
+
+O(nlogn), O(n)
 """
 from typing import List
-
+from collections import Counter
 
 class Solution:
     def maximumPopulation(self, logs: List[List[int]]) -> int:
-        return -1
+
+        # ordered dict {year: pop change}
+        c = Counter()
+    
+        for b,d in logs:
+            c[b] += 1 # 2000 +
+            c[d] -= 1 # 2090 -
+
+        res = 0
+        max = 0
+        curr = 0
+        for year, change in sorted(c):
+            curr += change
+            if max < curr:
+                max = curr
+                res = year
+
+        return res
