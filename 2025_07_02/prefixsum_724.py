@@ -16,9 +16,19 @@ Constraints:
 
 * 1 <= nums.length <= 10^4
 * -1000 <= nums[i] <= 1000
+
 """
 from typing import List
 
 class Solution:
     def pivotIndex(self, nums: List[int]) -> int:
+
+        total = sum(nums)
+
+        prefixSum = 0
+        for i, n in enumerate(nums):
+            if prefixSum == total - prefixSum - n:
+                return i
+            prefixSum += n
+
         return -1
