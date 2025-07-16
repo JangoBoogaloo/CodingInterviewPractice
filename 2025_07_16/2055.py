@@ -34,6 +34,7 @@ Example 1:
 """
 
 from typing import List
+from itertools import *
 from collections import *
 from bisect import *
 from heapq import *
