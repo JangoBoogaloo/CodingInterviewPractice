@@ -13,6 +13,15 @@ Constraints:
 * 1 <= w.length <= 10^4
 * 1 <= w[i] <= 10^5
 * pickIndex will be called at most 10^4 times.
+
+
+
+w = [1,2,3,4,5] sum = 15
+     1,3,6,10,15
+p = [1/15, 2/15 ...]
+
+random % 15 = 
+
 """
 from typing import List
 from itertools import *
@@ -22,7 +31,17 @@ from heapq import *
 
 class Solution:
     def __init__(self, w: List[int]):
+
+        # go through arary to get prefix sum
+        # end of it, will get total sum
+        self.curr = 0
+        self.prefix = []
+        for n in w:
+            self.curr += n
+            self.prefix.append(self.curr)
+        self.max = self.curr
         return
 
     def pickIndex(self) -> int:
-        return -1
+        target = uniform(0, 1) * self.max
+        return bisect_right(self.prefix, target)

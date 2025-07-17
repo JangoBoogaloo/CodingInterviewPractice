@@ -10,6 +10,15 @@ In other words, `result[i]` is equal to `sum(|nums[i]-nums[j]|)` where `0 <= j <
 Constraints:
 * 2 <= nums.length <= 10^5
 * 1 <= nums[i] <= nums[i + 1] <= 10^4
+
+
+Input: nums = [2,3,5]
+Output: [4,3,5]
+Explanation: Assuming the arrays are 0-indexed, then
+result[0] = |2-2| + |2-3| + |2-5| = 0 + 1 + 3 = 4,
+result[1] = |3-2| + |3-3| + |3-5| = 1 + 0 + 2 = 3,
+result[2] = |5-2| + |5-3| + |5-5| = 3 + 2 + 0 = 5.
+
 """
 from typing import List
 from itertools import *
@@ -19,4 +28,26 @@ from heapq import *
 
 class Solution:
     def getSumAbsoluteDifferences(self, nums: List[int]) -> List[int]:
-        return []
+
+        # n - a, n - b, n - c ..
+        # 3n - (a + b + c)
+
+        # 1, 2, 3
+        #    _
+        # 0  1  2
+        # b-a + c-b =  3*b - (a+b+c) = b-a + b-c
+
+        # k = len(nums), (i) * nums[i] - prefixSum(i-1) + prefixSum(k - 1) - prefixSum(i) - (k - 1 - i) * nums[i] 
+        k = len(nums)
+        total = sum(nums)
+        curr = 0
+        res = []
+
+        for i, n in enumerate(nums):
+
+            post_total = total - curr
+            pre_total = curr
+            curr+=n            
+            res.append(i*n - pre_total + post_total - (k - 1 - i) * n)
+
+        return res

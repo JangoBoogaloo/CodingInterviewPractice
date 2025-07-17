@@ -41,4 +41,20 @@ from heapq import *
 
 class Solution:
     def minOperations(self, nums: List[int], queries: List[int]) -> List[int]:
-        return []
+        k = len(nums)
+        nums.sort()
+        res = []
+        
+        prefixSum = []
+        curr = 0
+        for n in nums:
+            prefixSum.append(curr)
+            curr+=n
+        prefixSum.append(curr)
+            
+        for q in queries:
+            i = bisect_left(nums, q)
+            steps = i*q - prefixSum[i] + prefixSum[-1] - prefixSum[k-1- i] - (k - 1 - i) * q 
+            res.append(steps)
+
+        return res

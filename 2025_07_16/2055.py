@@ -41,4 +41,26 @@ from heapq import *
 
 class Solution:
     def platesBetweenCandles(self, s: str, queries: List[List[int]]) -> List[int]:
-        return []
+        #  **|**|***|
+        #  0123456789
+        # [2 5 10  100]
+        
+        # O(size of s) + O(q) * O(num of candles in q)
+
+        candle_loc = []
+        for i, c in enumerate(s):
+            if c == '|':                  # s = [s|ssss|ss]
+                candle_loc.append(i)      # c = [ 1    7]
+                                          # q = [2, 8]     
+                                          # fir = 1
+                                          # lst = 1
+        result = []
+        for l,r in queries:
+            firstLocIndex = bisect_left(candle_loc, l)
+            lastLocIndex = bisect_right(candle_loc, r) - 1
+            plates = 0
+            if lastLocIndex > firstLocIndex:
+                candles = lastLocIndex - firstLocIndex
+                plates = candle_loc[lastLocIndex] - candle_loc[firstLocIndex] - candles
+            result.append(plates)
+        return result
