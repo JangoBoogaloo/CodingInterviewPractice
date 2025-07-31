@@ -1,3 +1,4 @@
+# https://github.com/JangoBoogaloo/LeetCodeExcercise/pull/1
 """
 Given two integer arrays inorder and postorder
 where inorder is the inorder traversal of a binary tree and postorder is the postorder traversal of the same tree,
@@ -12,6 +13,12 @@ Example:
 
 inorder = [9, 3, 15, 20, 7]
 postorder = [9, 15, 7, 20, 3]
+
+
+in: [LeftTree | curr | rightTree] ->
+
+post: [LeftTree | rightTree | curr] <-
+
 """
 from typing import Optional, List
 
@@ -25,4 +32,22 @@ class TreeNode:
 
 class Solution:
     def buildTree(self, inorder: List[int], postorder: List[int]) -> Optional[TreeNode]:
-        return None
+
+        def breakdown(inorder, postorder) -> Optional[TreeNode]:
+
+            if not inorder and not postorder:
+                return None
+
+            root = postorder[-1]
+            
+            node = TreeNode(root)
+
+            inorder_root_idx = inorder.index(root)
+            
+            left_size = inorder_root_idx
+
+            node.left = breakdown(inorder[:inorder_root_idx-1], postorder[:left_size])
+            node.right = breakdown(inorder[inorder_root_idx+1:], postorder[left_size:-2])
+            return node
+
+        return breakdown(inorder, postorder)
