@@ -38,4 +38,14 @@ from typing import List
 
 class Solution:
     def getSkyline(self, buildings: List[List[int]]) -> List[List[int]]:
-        return []
+
+        positions = sorted(list(set([x for building in buildings for x in building[:2]])))
+        ans = []
+        for pos in positions:
+            maxHeight = 0
+            for left, right, height in buildings:
+                if left <= pos < right:
+                    maxHeight = max(height, maxHeight)
+            if not ans or maxHeight != ans[-1]:
+                ans.append(pos)
+        return ans
