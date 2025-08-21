@@ -31,4 +31,19 @@ class ListNode:
 
 class Solution:
     def removeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        return head
+        
+        dummyHead = ListNode(float('inf'), None)
+        stk = [dummyHead] # decreasing mono stack
+        
+        r = head
+        while r:
+
+            while stk and stk[-1].val < r.val:
+                stk.pop()
+
+            stk[-1].next = r        
+            stk.append(r)
+            
+            r = r.next
+
+        return dummyHead.next
