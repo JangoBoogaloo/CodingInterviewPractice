@@ -48,5 +48,18 @@ class TreeNode:
 
 
 class Solution:
+    def _getAncestor(self, curr: Optional[TreeNode], srcVal, dstVal) -> Optional[TreeNode]:
+        if not curr:
+            return None
+        if curr.val == srcVal or curr.val == dstVal:
+            return curr
+        leftA = self._getAncestor(curr.left, srcVal, dstVal)
+        rightA = self._getAncestor(curr.right, srcVal, dstVal)
+        if leftA and rightA:
+            return curr
+        if leftA:
+            return leftA
+        return rightA
+
     def getDirections(self, root: Optional[TreeNode], startValue: int, destValue: int) -> str:
         return ""

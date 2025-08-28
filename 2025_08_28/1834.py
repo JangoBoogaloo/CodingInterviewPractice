@@ -37,4 +37,21 @@ from typing import List
 
 class Solution:
     def getOrder(self, tasks: List[List[int]]) -> List[int]:
-        return []
+        task_info = [(start, duration, i) for i, (start, duration) in enumerate(tasks)]
+        task_info.sort()
+
+        schedulePQ = []
+        currTime = 0
+        i = 0
+        execution = []
+        while i < len(task_info) or schedulePQ:
+            if not schedulePQ:
+                currTime = max(currTime, task_info[i][0])
+            while i < len(task_info) and currTime >= task_info[i][0]:
+                _, duration, id = task_info[i]
+                heappush(schedulePQ, (duration, id))
+                i += 1
+            duration, id = heappop(schedulePQ)
+            currTime += duration
+            execution.append(id)
+        return execution
