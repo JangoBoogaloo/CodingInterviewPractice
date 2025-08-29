@@ -22,10 +22,20 @@ Example 1
 //   // \
 3   6    4
 
+[315264]
+
+
 startValue = 3, destValue = 6
 
 Output: UURL
 
+      7
+     /
+    5
+  // \\
+  1   2
+//   // \
+3   6    4
 
 Constraints:
 
@@ -38,7 +48,7 @@ Constraints:
 """
 
 from typing import Optional
-
+from enum import Enum
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -48,5 +58,41 @@ class TreeNode:
 
 
 class Solution:
+    def _getLca(self, currNode, startVal, dstVal) -> Optional[TreeNode]:
+        if not currNode:
+            return None
+        if currNode.val == startVal or currNode.val == dstVal:
+            return currNode
+        leftA = self._getLca(currNode.left, startVal, dstVal)
+        rightA = self._getLca(currNode.left, startVal, dstVal)
+        if leftA and rightA:
+            return currNode
+        if leftA:
+            return leftA
+        return rightA
+
     def getDirections(self, root: Optional[TreeNode], startValue: int, destValue: int) -> str:
-        return ""
+
+        lca = self._getLca(root, startValue, destValue)
+
+        
+        def DFS(curr, path, targetValue) -> bool:
+            if not curr:
+                return False
+            if curr.val == targetValue:
+                return True
+            
+            path.append("L")
+            if DFS(curr.left, path, targetValue):
+                return True
+            path.pop()
+            path.append("R")
+            if DFS(curr.right, path, targetValue):
+                return True
+            path.pop()
+            return False
+        srcPath, dstPath = [],  []
+        DFS(lca, srcPath, startValue)
+        DFS(lca, dstPath, destValue)
+        
+        return "".join(['U' for c in l]) + "".join(r)

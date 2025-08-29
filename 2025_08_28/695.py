@@ -26,5 +26,33 @@ from typing import List
 
 
 class Solution:
+    curr = 0
     def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
-        return -1
+
+        numRows, numCols = len(grid), len(grid[0])
+
+        res = 0
+
+        self.curr = 0
+
+        def visitLand(row, col):
+            if grid[row][col] == 1:
+                grid[row][col] = 0
+                self.curr += 1
+            else:
+                return
+
+            for (dx, dy) in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                nx, ny = col + dx, row + dy 
+                if 0 <= nx < numCols and 0<= ny < numRows: 
+                    visitLand(ny, nx)
+
+
+
+        for r in range(numRows):
+            for c in range(numCols):
+                if grid[r][c] == 1:
+                    visitLand(r, c)
+                    res = max(res, self.curr)
+                    self.curr = 0
+        return res
