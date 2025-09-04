@@ -14,5 +14,41 @@ class TreeNode:
         self.right = right
 
 class Solution:
-    def _findLCAForANode(self, root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode:
-        return TreeNode()
+        def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+
+            def lca(curr) -> TreeNode:
+
+                if not curr:
+                    return None                
+                
+                if curr.val == p.val:
+                    return curr
+                elif curr.val == q.val:
+                    return curr
+                
+                a = lca(curr.left)
+                b = lca(curr.right)
+
+                if a and b:
+                    return curr
+                elif a and not b:
+                    return a
+                elif b and not a:
+                    return b
+                return None
+
+            return lca(root)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

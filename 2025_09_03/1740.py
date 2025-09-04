@@ -36,4 +36,45 @@ class TreeNode:
 
 class Solution:
     def findDistance(self, root: Optional[TreeNode], p: int, q: int) -> int:
-        return -1
+
+        def lca(curr) -> TreeNode:
+            if not curr: 
+                return None
+            
+            if curr.val == p:
+                return curr
+            elif curr.val == q:
+                return curr
+            
+            l = lca(curr.left)
+            r = lca(curr.right)
+
+            if l and r:
+                return curr
+            elif l:
+                return l
+            elif r:
+                return r
+            return None
+            
+        
+        LCA = lca(root)
+        #.    3 
+        #.  2
+        def getDep(curr, target):
+            if not curr:
+                return -1
+                       
+            if curr.val == target:
+                return 0
+            
+            l = getDep(curr.left, target)
+            r = getDep(curr.right, target)
+
+            if l is not -1:
+                return l + 1
+            elif r is not -1:
+                return r + 1
+            return -1
+    
+        return getDep(LCA, p) + getDep(LCA, q)
