@@ -7,10 +7,22 @@ In one move, we may choose two adjacent nodes and move one coin from one node to
 Return the minimum number of moves required to make every node have exactly one coin.
 
 Example 1:
+
+       1
+     /  \
+    2     1
+  /  \   / \
+1     0  1  1 
+
+
+
 Input:
     3
   /  \
 0     0
+
+
+
 Output: 2
 Explain:
     2
@@ -19,6 +31,7 @@ Explain:
     1
   /  \
 1     1
+
 -----------------------------------------------
 
 Example 2:
@@ -41,6 +54,16 @@ Explain
     1
   /  \
 1     1
+
+
+
+
+       1
+     /  \
+    2     1
+  /  \   / \
+1     0  1  1 
+
 """
 from typing import Optional
 
@@ -54,4 +77,16 @@ class TreeNode:
 
 class Solution:
     def distributeCoins(self, root: Optional[TreeNode]) -> int:
-        return -1
+        
+        self.res = 0
+
+        def post_order(curr) -> int:
+          if curr is None:
+              return 0
+
+          treeBalance = curr.val - 1 + post_order(curr.left) + post_order(curr.right)
+          print(treeBalance)
+          self.res += abs(treeBalance)
+          return treeBalance
+        post_order(root)
+        return self.res

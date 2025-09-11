@@ -48,4 +48,44 @@ class TreeNode:
 
 class Solution:
     def isSubPath(self, head: Optional[ListNode], root: Optional[TreeNode]) -> bool:
-        return False
+      
+      if head is None:
+         return True
+      if root is None:
+         return False
+
+      def dfs(target, curr) -> bool:
+        """
+        target iterate over head llist
+        curr iterate over tree
+        """
+        if target is None:
+          return True
+                
+        if curr is None:
+          return False
+        
+        if curr.val != target.val:
+          return False
+        return dfs(target.next, curr.left) or dfs(target.next, curr.right)
+
+      return dfs(head, root) or self.isSubPath(head, root.left) or self.isSubPath(head, root.righ)
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

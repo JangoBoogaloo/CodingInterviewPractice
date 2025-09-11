@@ -27,4 +27,17 @@ from typing import List
 
 class Solution:
     def minimumHealth(self, damage: List[int], armor: int) -> int:
-        return -1
+
+        most_damage = 0
+        sum_damage = 0
+
+        for d in damage:
+            most_damage = max(most_damage, d)
+            sum_damage += d
+
+        return sum_damage - most_damage + max(0, most_damage - armor) + 1
+
+
+class SolutionOneLiner:
+    def minimumHealth(self, damage: List[int], armor: int) -> int:
+        return sum(damage) + 1 - min(max(damage), armor)
