@@ -25,39 +25,19 @@ Constraints:
 2 <= nums.length <= 10^3
 1 <= nums[i] <= 10^5
 """
-from functools import cache
 from typing import List
 
 
 class SolutionTopDown:
     def maxScore(self, nums: List[int]) -> int:
-        @cache
-        def maxScoreStartAt(startIndex):
-            if startIndex == len(nums):
-                return 0
-
-            maxScoreAtStartIndex = 0
-            for dstIndex in range(startIndex + 1, len(nums)):
-                maxScoreAtStartIndex = max(maxScoreAtStartIndex, (dstIndex - startIndex) * nums[dstIndex] + maxScoreStartAt(dstIndex))
-            return maxScoreAtStartIndex
-
-        return maxScoreStartAt(0)
+        return -1
 
 
 class SolutionBottomUp:
     def maxScore(self, nums: List[int]) -> int:
-        maxStartingAt = [0] * len(nums)
-        for j in range(1, len(nums)):
-            for i in range(j):
-                maxStartingAt[j] = max(maxStartingAt[j], maxStartingAt[i] + (j-i)*nums[j])
-        return maxStartingAt[-1]
+        return -1
 
 
 class SolutionMemoryOptimize:
     def maxScore(self, nums: List[int]) -> int:
-        maxScore = 0
-        score = 0
-        for i in range(len(nums)-1, 0, -1):
-            maxScore = max(maxScore, nums[i])
-            score += maxScore
-        return score
+        return -1
