@@ -25,10 +25,19 @@ Constraints:
 2 <= nums.length <= 10^3
 1 <= nums[i] <= 10^5
 """
-
 from typing import List
 
 
-class Solution:
+class SolutionTopDown:
+    def maxScore(self, nums: List[int]) -> int:
+        return -1
+
+
+class SolutionBottomUp:
+    def maxScore(self, nums: List[int]) -> int:
+        return -1
+
+
+class SolutionMemoryOptimize:
     def maxScore(self, nums: List[int]) -> int:
         return -1
