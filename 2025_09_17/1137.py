@@ -18,7 +18,29 @@ Constraints:
 
 0 <= n <= 37
 The answer is guaranteed to fit within a 32-bit integer, ie. answer <= 2^31 - 1.
+
+
+Tn+3 = Tn + Tn+1 + Tn+2
+
+Tcurr = Tcurr-3 + Tcurr-2 + Tcurr-1
+
 """
 class Solution:
     def tribonacci(self, n: int) -> int:
-        return -1
+
+        dp = {}
+
+        def recur(curr) -> int:
+
+            if curr == 0:
+                return 0
+            if curr == 1 or curr == 2:
+                return 1
+            if curr in dp:
+                return dp[curr]
+
+            res = recur(curr-3) + recur(curr-1) + recur(curr-2)
+            dp[curr] = res
+            return res
+            
+        return recur(n)
