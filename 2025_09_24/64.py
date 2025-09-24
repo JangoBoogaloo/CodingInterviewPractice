@@ -23,6 +23,16 @@ Explanation:
 from typing import List
 
 
-class Solution:
+class SolutionTopDown:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        return -1
+
+
+class SolutionBottomUp:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        return -1
+
+
+class SolutionMemoryOptimize:
     def minPathSum(self, grid: List[List[int]]) -> int:
         return -1
