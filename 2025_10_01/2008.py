@@ -16,41 +16,14 @@ Given `n` and `rides`, return the maximum number of dollars you can earn by pick
 Note: You may drop off a passenger and pick up a different passenger at the same point.
 """
 from typing import List
-from heapq import *
+
 
 class SolutionDP:
     def maxTaxiEarnings(self, locations: int, rides: List[List[int]]) -> int:
-        maxProfitAt = [0] * (locations+1)
-        rides.sort(key=lambda r: r[1])
-        rideIndex = 0
-        for location in range(1, len(maxProfitAt)):
-            maxProfitAt[location] = maxProfitAt[location-1]
-            while rideIndex < len(rides) and location == rides[rideIndex][1]:
-                start, end, tip = rides[rideIndex]
-                profit = tip + end - start
-                maxProfitAt[location] = max(maxProfitAt[location], maxProfitAt[start] + profit)
-                rideIndex += 1
-        return maxProfitAt[-1]
+        return -1
 
 
 
 class SolutionPQ:
     def maxTaxiEarnings(self, locations: int, rides: List[List[int]]) -> int:
-        rides.sort()
-        end_profit_heap = []
-        prevMaxProfit = 0
-        for start, end, tip in rides:
-            if end > locations:
-                continue
-            singleProfit = tip + end - start
-            while end_profit_heap and start >= end_profit_heap[0][0]:
-                prevMaxProfit = max(prevMaxProfit, end_profit_heap[0][1])
-                heappop(end_profit_heap)
-            currentMaxProfit = prevMaxProfit + singleProfit
-            heappush(end_profit_heap, (end, currentMaxProfit))
-
-        maxProfit = 0
-        while end_profit_heap:
-            _, profit = heappop(end_profit_heap)
-            maxProfit = max(maxProfit, profit)
-        return maxProfit
+        return -1
