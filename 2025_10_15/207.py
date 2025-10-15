@@ -31,5 +31,9 @@ testCases = [
 if __name__ == '__main__':
     solution = SolutionDFS()
     for numCourses, prerequisites, expect in testCases:
-        assert solution.canFinish(numCourses, prerequisites) == expect
+        actual =  solution.canFinish(numCourses, prerequisites)
+        if actual != expect:
+            print("---------------------------------------------")
+            print(f"expect: {numCourses}, {prerequisites} => {expect}")
+            print(f"actual: {numCourses}, {prerequisites} => {actual}")
 

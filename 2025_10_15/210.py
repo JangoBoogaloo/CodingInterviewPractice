@@ -22,4 +22,5 @@ if __name__ == '__main__':
     solution = SolutionDFS()
     for numCourses, prerequisites in testCases:
         order = solution.findOrder(numCourses, prerequisites)
-        print(order)
+        print("---------------------------------------------")
+        print(f"{numCourses}, {prerequisites} => {order}")

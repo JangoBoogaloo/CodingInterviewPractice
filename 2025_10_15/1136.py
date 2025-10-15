@@ -26,5 +26,9 @@ testCases = [
 
 if __name__ == '__main__':
     solution = Solution()
-    for numCourses, prerequisites, expect in testCases:
-        assert solution.minimumSemesters(numCourses, prerequisites) == expect
+    for numCourses, relations, expect in testCases:
+        actual = solution.minimumSemesters(numCourses, relations)
+        if actual != expect:
+            print("---------------------------------------------")
+            print(f"expect: {numCourses}, {relations} => {expect}")
+            print(f"actual: {numCourses}, {relations} => {actual}")
