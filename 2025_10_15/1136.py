@@ -9,11 +9,44 @@ In one semester, you can take any number of courses as long as you have taken al
 Return the minimum number of semesters needed to take all courses. If there is no way to take all the courses, return `-1`.
 """
 from typing import List
-
+from collections import defaultdict, deque
 
 class Solution:
     def minimumSemesters(self, n: int, relations: List[List[int]]) -> int:
-        return -1
+        
+        maxdepth = 0
+
+        dependencies = defaultdict(list)  # [1 <- 0]
+        for ai, bi in relations:
+            dependencies[ai].append(bi)
+
+        # for each target, searching for prerequisites
+        def findCycles(target, checked_targets, whitelist, depth):
+            nonlocal maxdepth
+
+            if target in whitelist:
+                return False
+            # target = 1
+            # target = 0
+            for prereq in dependencies[target]:
+                # prereq = 0
+                if prereq in checked_targets:
+                    return True
+                
+                checked_targets.add(prereq)
+                if findCycles(prereq, checked_targets, whitelist, depth + 1):
+                    return True
+                checked_targets.remove(prereq)
+            whitelist.add(target)
+
+            maxdepth = max(maxdepth, depth)
+            return False
+            
+        whitelist = set()
+        for c in range(n):
+            if findCycles(c, set(), whitelist, 0):
+                return -1
+        return maxdepth + 1
 
 
 testCases = [
