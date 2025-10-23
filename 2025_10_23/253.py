@@ -8,8 +8,18 @@ Constraints:
 
 """
 from typing import List
+from heapq import heappop, heappush
 
 
 class Solution2:
     def minMeetingRooms(self, intervals: List[List[int]]) -> int:
-        return -1
+        intervals.sort()
+        endTimePQ = []
+        heappush(endTimePQ, intervals[0][1])
+        maxRooms = 1
+        for start, end in intervals[1:]:
+            while endTimePQ and endTimePQ[0] <= start:
+                heappop(endTimePQ)
+            heappush(endTimePQ, end)
+            maxRooms = max(len(endTimePQ), maxRooms)
+        return maxRooms
