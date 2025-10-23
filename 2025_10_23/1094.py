@@ -19,20 +19,8 @@ Input: trips = [[2,1,5],[3,3,7]], capacity = 5
 Output: true
 """
 from typing import List
-from heapq import heappush, heappop
 
 
 class Solution:
     def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
-        startTimeTrips = sorted(trips, key=lambda x: x[1])
-        endTimePassengersHeap = []
-        passengersInCar = 0
-        for passengers, start, end in trips:
-            while endTimePassengersHeap and endTimePassengersHeap[0][0] <= start:
-                passengersInCar -= endTimePassengersHeap[0][1]
-                heappop(endTimePassengersHeap)
-            passengersInCar += 1
-            if passengersInCar > capacity:
-                return False
-            heappush(endTimePassengersHeap, (end, passengers))
-        return True
+        return False
