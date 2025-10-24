@@ -19,8 +19,47 @@ Input: trips = [[2,1,5],[3,3,7]], capacity = 5
 Output: true
 """
 from typing import List
+from heapq import *
 
-
+"""
+[[2,1,5],[3,3,7]]
+5
+"""
 class Solution:
     def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
-        return False
+
+        minheap = []
+
+        trips.sort(key=lambda x:x[1]) # sort by pickup time
+
+        capacity -= trips[0][0]
+
+        if capacity < 0:
+            return False
+        #                  end          passengers
+        heappush(minheap, (trips[0][2], trips[0][0]))
+
+        for pa, start, end in trips[1:]:
+            # check getting off the car
+            while minheap and start >= minheap[0][0]:
+                capacity += minheap[0][1]
+                heappop(minheap)
+            # check validity for next
+            if capacity < pa:
+                return False
+            
+            # hopping onto the car
+            heappush(minheap, (end, pa))
+            capacity -= pa
+        return True
+    
+
+
+
+
+
+
+
+
+
+
