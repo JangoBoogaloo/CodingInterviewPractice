@@ -24,4 +24,37 @@ from collections import *
 
 class Solution:
     def maxDistance(self, grid: List[List[int]]) -> int:
-        return -1
+        
+        cols, rows = len(grid[0]), len(grid)
+
+        lands = deque()
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == 1:
+                    lands.append((r, c))
+                    grid[r][c] = '2'
+
+        dirs = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+        res = -1
+
+        while lands:
+            layer_size = len(lands)
+            for i in range(layer_size):
+                r, c = lands.popleft()                            
+                for dx, dy in dirs:
+                    next_r, next_c = r + dy if 0 <= r + dy < rows else r, c + dx if 0 <= c + dx < cols else c
+                    if grid[next_r][next_c] is "0":
+                        lands.append((next_r, next_c))
+                        grid[next_r][next_c] = '2'
+            res += 1
+        return res if res != -1 else res + 1
+
+
+
+
+
+
+
+
+
+
