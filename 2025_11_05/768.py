@@ -27,4 +27,13 @@ from typing import List
 
 class Solution:
     def maxChunksToSorted(self, arr: List[int]):
-        return -1
+        incStk = []   # 0 -> 1 -> 2
+        for idx in range(len(arr)):                     # 1,  3,  0,   2,    4
+            curr_max = arr[idx]
+            while incStk and arr[idx] < incStk[-1]:     #       
+                prevMax = incStk.pop()
+                curr_max = max(curr_max, prevMax)
+                
+            incStk.append(curr_max)                   #1, 1, 3  0   0,2    0,2,4   get 3 expect 2
+            
+        return len(incStk)
