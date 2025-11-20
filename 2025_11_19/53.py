@@ -9,7 +9,21 @@ from typing import List
 
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        return -1
+
+
+        # kadane's algo O(n)
+        currSum = 0
+        res = float('-inf')
+
+        for n in nums:
+
+            currSum+=n            
+            res = max(res, currSum) 
+            
+            if currSum < 0:
+                currSum = 0
+            
+        return res
 
 
 
